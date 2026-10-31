@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#060913">
+<title>Andrei VPN: приложение для Android с одной кнопкой</title>
+<meta name="description" content="Andrei VPN: простое приложение для Android. Одна кнопка включает и выключает VPN. Скачайте файл и установите за минуту.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&family=Unbounded:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --ink: #060913;
+    --panel: #0E1527;
+    --panel2: #131C34;
+    --line: rgba(140, 172, 255, 0.15);
+    --line2: rgba(140, 172, 255, 0.28);
+    --text: #E9EEF8;
+    --dim: #93A0B8;
+    --cyan: #25C2FF;
+    --amber: #FFC66D;
+    --ok: #3DDC97;
+    --display: "Unbounded", "Onest", system-ui, sans-serif;
+    --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background-image: radial-gradient(900px 420px at 80% -10%, rgba(37, 194, 255, 0.12), transparent 60%), radial-gradient(700px 400px at -10% 30%, rgba(157, 144, 255, 0.10), transparent 60%); }
+h1, h2, h3, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(980px, 100% - 32px); margin-inline: auto; }
+@media (min-width: 720px) { .wrap { width: min(980px, 100% - 64px); } }
+
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(6, 9, 19, 0.82); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { font-family: var(--display); font-weight: 500; font-size: 17px; text-decoration: none; letter-spacing: -0.02em; }
+.brand b { color: var(--cyan); }
+
+.btn { display: inline-block; font: inherit; font-weight: 600; font-size: 16px; text-decoration: none; text-align: center; padding: 14px 22px; border-radius: 10px; border: 1px solid transparent; cursor: pointer; transition: background-color .15s, border-color .15s, box-shadow .15s, color .15s; }
+.btn-primary { background: var(--cyan); color: #04101a; box-shadow: 0 0 26px rgba(37, 194, 255, 0.28); }
+.btn-primary:hover { background: #5DD3FF; box-shadow: 0 0 28px rgba(37, 194, 255, 0.45); }
+.btn-ghost { border-color: var(--line2); color: var(--text); background: rgba(255, 255, 255, 0.03); }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn-small { padding: 9px 15px; font-size: 14px; }
+.btn-big { font-size: 18px; padding: 18px 30px; }
+
+.hero { padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px); }
+.eyebrow { color: var(--cyan); font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+h1 { font-family: var(--display); font-weight: 500; font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.12; letter-spacing: -0.025em; margin-top: 14px; text-wrap: balance; }
+.lead { color: var(--dim); max-width: 56ch; margin-top: 18px; font-size: 1.08rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+.meta { color: var(--dim); font-size: 14px; margin-top: 14px; }
+
+.phone-row { display: grid; gap: 28px; align-items: center; margin-top: 40px; }
+@media (min-width: 760px) { .phone-row { grid-template-columns: 1.2fr 1fr; } }
+.mock { justify-self: center; width: min(260px, 70vw); aspect-ratio: 9 / 18; background: var(--panel); border: 1px solid var(--line2); border-radius: 34px; padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; position: relative; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); }
+.mock .power { width: 120px; height: 120px; border-radius: 50%; background: var(--ok); display: grid; place-items: center; font-family: var(--display); font-size: 24px; color: #fff; box-shadow: 0 0 44px rgba(61, 220, 151, 0.4); }
+.mock .cap { color: var(--dim); font-size: 13px; text-align: center; }
+.mock .ad { position: absolute; left: 14px; right: 14px; bottom: 16px; background: #1F3A5F; border-radius: 12px; padding: 8px 10px; }
+.mock .ad small { color: #9FB4D0; font-size: 9px; display: block; }
+.mock .ad b { font-size: 11px; display: block; }
+
+.section { padding-block: clamp(36px, 6vw, 64px); border-top: 1px solid var(--line); }
+h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.4rem, 3.2vw, 2rem); line-height: 1.2; letter-spacing: -0.02em; }
+.steps { display: grid; gap: 14px; margin-top: 26px; counter-reset: s; }
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+.steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 20px 64px; position: relative; }
+.steps li::before { content: counter(s); position: absolute; left: 18px; top: 18px; width: 32px; height: 32px; border-radius: 50%; background: rgba(37, 194, 255, 0.14); color: var(--cyan); display: grid; place-items: center; font-weight: 600; }
+.steps b { display: block; margin-bottom: 4px; }
+.steps span { color: var(--dim); font-size: 15px; }
+
+.cards { display: grid; gap: 14px; margin-top: 26px; }
+@media (min-width: 760px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.card p { color: var(--dim); font-size: 15px; }
+.card .btn { margin-top: 16px; }
+
+.note { margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(255, 198, 109, 0.35); background: rgba(255, 198, 109, 0.06); border-radius: 12px; color: #F3DDB1; font-size: 15px; }
+
+.site-footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--dim); font-size: 14px; margin-top: 24px; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="wrap bar">
+        <a class="brand" href="./">Andrei<b>.</b>Studio</a>
+        <a class="btn btn-primary btn-small" href="https://t.me/andrey_digita_ai" target="_blank" rel="noopener">Написать в Telegram</a>
+    </div>
+</header>
+
+<main>
+<section class="hero">
+    <div class="wrap">
+        <p class="eyebrow">Приложение для Android</p>
+        <h1>Andrei VPN: одна кнопка, чтобы включить и выключить</h1>
+        <p class="lead">Простое приложение без настроек. Установили, вставили ссылку доступа один раз, дальше нажимаете большую кнопку, и всё работает.</p>
+        <div class="cta">
+            <a class="btn btn-primary btn-big" href="https://github.com/veraverkina2-svg/andrei-studio/releases/latest/download/Andrei-VPN-public.apk" download>Скачать для Android</a>
+            <a class="btn btn-ghost btn-big" href="https://t.me/andrey_digita_ai" target="_blank" rel="noopener">Получить ссылку доступа</a>
+        </div>
+        <p class="meta">Файл .apk, около 70 МБ. Android 7.0 и новее. Бесплатно, в приложении показывается реклама студии.</p>
+
+        <div class="phone-row">
+            <div>
+                <h2>Как это выглядит</h2>
+                <p class="lead" style="margin-top:12px">Зелёная кнопка значит, что VPN включён. Серая значит, что выключен. Внизу экрана небольшой рекламный блок.</p>
+            </div>
+            <div class="mock" aria-hidden="true">
+                <div class="power">ВКЛ</div>
+                <div class="cap">VPN включён.<br>Нажмите, чтобы выключить</div>
+                <div class="ad"><small>Реклама</small><b>Нужен сайт или ИИ-видео для бизнеса?</b></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <h2>Как установить</h2>
+        <ol class="steps">
+            <li><b>Скачайте файл</b><span>Нажмите «Скачать для Android» на телефоне. Если браузер спросит, оставить ли файл, подтвердите.</span></li>
+            <li><b>Откройте скачанный файл</b><span>Телефон попросит разрешить установку из этого источника. Включите разрешение и нажмите «Установить». Если появится предупреждение защиты, выберите «Всё равно установить».</span></li>
+            <li><b>Получите ссылку доступа</b><span>Напишите мне в Telegram. Ссылка начинается с vless://, её нужно вставить в приложение один раз.</span></li>
+            <li><b>Нажмите кнопку</b><span>Откройте приложение, вставьте ссылку, нажмите «Добавить», затем большую кнопку и подтвердите запрос на VPN-подключение.</span></li>
+        </ol>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <h2>А если iPhone?</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Для iPhone нужно другое приложение</h3>
+                <p>Файлы .apk на iPhone не устанавливаются. Поставьте бесплатное приложение Streisand или Happ из App Store, а затем откройте в нём ту же ссылку доступа. Её я тоже выдаю в Telegram.</p>
+                <a class="btn btn-ghost" href="https://t.me/andrey_digita_ai" target="_blank" rel="noopener">Написать в Telegram</a>
+            </div>
+            <div class="card">
+                <h3>Почему ссылка выдаётся вручную</h3>
+                <p>Сервер небольшой, поэтому доступ даётся по запросу и ограниченному числу людей. Так скорость остаётся хорошей, а ключ не попадает в чужие руки.</p>
+            </div>
+        </div>
+        <p class="note">Это личный сервис без гарантий стабильности. Пользуйтесь им в соответствии с законами вашей страны.</p>
+    </div>
+</section>
+</main>
+
+<footer class="site-footer">
+    <div class="wrap">
+        <span>© 2026 Andrei Studio</span>
+        <a href="./">Вернуться на главный сайт</a>
+    </div>
+</footer>
+
+</body>
+</html>
