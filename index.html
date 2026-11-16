@@ -189,6 +189,13 @@ ul, ol { padding: 0; list-style: none; }
 .sk.w70 { width: 70%; } .sk.w50 { width: 50%; } .sk.w85 { width: 85%; }
 .m-pop { position: absolute; left: 50%; top: 52px; width: 72%; transform: translateX(-50%); padding: 12px; border-radius: 12px; background: #101A31; border: 1px solid var(--cyan); box-shadow: 0 14px 40px rgba(0, 0, 0, .55), 0 0 24px rgba(37, 194, 255, .2); }
 .fld { padding: 7px 9px; margin-bottom: 7px; border-radius: 7px; background: #0A1122; border: 1px solid var(--line); color: #6B7993; font-size: 12px; }
+.m-lang { display: flex; gap: 6px; margin-bottom: 14px; }
+.m-lang b { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line2); color: var(--dim); }
+.m-lang b.on { color: #04101a; background: var(--cyan); border-color: var(--cyan); }
+.m-tour { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 10px; margin-top: 8px; border-radius: 9px; background: #0A1122; border: 1px solid var(--line); font-size: 12px; color: #C4CEE2; }
+.m-tour span { font-family: var(--mono); font-size: 11px; color: var(--cyan); white-space: nowrap; }
+.m-wa { display: flex; gap: 8px; margin-top: 12px; }
+.m-wa div { flex: 1; text-align: center; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; border: 1px solid var(--line2); color: #C4CEE2; }
 .m-app { width: 210px; background: #0E1621; border: 6px solid #1B2540; border-radius: 30px; padding: 12px 10px 14px; box-shadow: 0 20px 50px rgba(0, 0, 0, .5); }
 .m-app h4 { margin: 2px 4px 10px; font-size: 14px; }
 .task { display: flex; align-items: center; gap: 8px; padding: 9px; border-radius: 10px; background: #152036; margin-bottom: 7px; font-size: 12px; }
@@ -568,6 +575,33 @@ main, .site-footer { position: relative; z-index: 1; }
                     </ul>
                     <div class="tags"><span>HTML/CSS/JS</span><span>Telegram bot</span><span>GitHub Pages</span></div>
                     <a class="btn btn-ghost btn-small" href="https://taroradmila.github.io/taro-site/" target="_blank" rel="noopener" data-ru="Открыть сайт">Open the site</a>
+                </div>
+            </article>
+
+            <article class="case">
+                <div class="visual">
+                    <div class="m-browser">
+                        <div class="m-bar"><i></i><i></i><i></i><span>vietnam-travel-hub</span></div>
+                        <div class="m-page">
+                            <div class="m-lang"><b class="on">RU</b><b>UZ</b><b>EN</b></div>
+                            <div class="sk h"></div><div class="sk w85"></div>
+                            <div class="m-tour"><b data-ru="Фанранг">Phan Rang</b><span>₽ / UZS / $</span></div>
+                            <div class="m-tour"><b data-ru="Далат">Da Lat</b><span>₽ / UZS / $</span></div>
+                            <div class="m-wa"><div>WhatsApp</div><div>Telegram</div></div>
+                        </div>
+                    </div>
+                    <span class="vtag" data-ru="Иллюстрация, не скриншот сайта">Illustration, not a screenshot</span>
+                </div>
+                <div>
+                    <span class="badge b-dev" data-ru="В разработке">In development</span>
+                    <h3 data-ru="Каталог экскурсий по Вьетнаму">Tour catalog for Vietnam</h3>
+                    <p data-ru="Сайт-каталог экскурсий для гостей из России, Узбекистана и других стран СНГ. Подводное видео на фоне, стеклянный интерфейс и кнопки связи в WhatsApp и Telegram.">A tour catalog site for guests from Russia, Uzbekistan and other CIS countries. Underwater video in the background, a glass-style interface and contact buttons for WhatsApp and Telegram.</p>
+                    <ul>
+                        <li data-ru="Переключение RU, UZ и EN без перезагрузки страницы">Switch between RU, UZ and EN without a page reload</li>
+                        <li data-ru="Цены в рублях, сумах или долларах, по языку страницы">Prices in rubles, soms or dollars, following the page language</li>
+                        <li data-ru="Бесплатное заполнение миграционной карты при заказе, в течение 24 часов">A free migration card fill-in with an order, within 24 hours</li>
+                    </ul>
+                    <div class="tags"><span>HTML/CSS/JS</span><span>RU / UZ / EN</span><span>WhatsApp</span><span>Telegram</span></div>
                 </div>
             </article>
 
