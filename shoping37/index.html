@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shoping 37</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,500&display=swap">
+<style>
+/* Layout: editorial fashion storefront. Staggered photo hero, marquee, bento categories, floating filter bar, photo-first grid, quick-view sheet, orders go to Instagram Direct. */
+:root{
+  --bg:#f7f6f4;
+  --surface:#ffffff;
+  --soft:#ebe8e4;
+  --ink:#100e0e;
+  --muted:#6f6a67;
+  --line:#e2dedb;
+  --accent:#5a3427;
+  --sans:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f0d0d;--surface:#1a1717;--soft:#262121;--ink:#f5f1ee;--muted:#a39b97;--line:#312b2b;--accent:#e0b59c;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f0d0d;--surface:#1a1717;--soft:#262121;--ink:#f5f1ee;--muted:#a39b97;--line:#312b2b;--accent:#e0b59c;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  padding-block:0 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+a{color:inherit}
+img{display:block}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto}
+.serif{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.02em;color:var(--accent)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;transition:transform .2s,opacity .2s,background .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:var(--bg)}
+.btn-ink:hover{opacity:.86}
+.btn-line{border-color:var(--line);background:transparent}
+.btn-line:hover{background:var(--surface)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* header */
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.logo{font-weight:800;font-size:21px;letter-spacing:-.05em;text-decoration:none}
+.logo i{font-style:normal;color:var(--accent)}
+.nav{display:flex;gap:28px;font-weight:500;font-size:14.5px}
+.nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav a:hover{color:var(--ink)}
+.head .btn{height:42px;padding:0 20px;font-size:14px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:24px 56px}
+.tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500;margin-bottom:22px}
+.tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.hero h1{font-weight:700;font-size:clamp(44px,7.4vw,100px);line-height:.94;letter-spacing:-.055em;margin:0 0 22px;text-wrap:balance}
+.hero p{margin:0 0 30px;font-size:17px;color:var(--muted);max-width:44ch}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.facts{display:grid;grid-template-columns:repeat(3,auto);gap:12px 36px;justify-content:start;margin:40px 0 0;padding:0;list-style:none}
+.facts b{display:block;font-size:22px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.facts span{font-size:12.5px;color:var(--muted)}
+.col3{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start;min-width:0;padding-bottom:70px}
+.col3 figure{margin:0;border-radius:26px;overflow:hidden;aspect-ratio:3/4.7;background:var(--soft);min-width:0}
+.col3 figure:nth-child(1){margin-top:56px}
+.col3 figure:nth-child(3){margin-top:112px}
+.col3 img{width:100%;height:100%;object-fit:cover}
+.pill-float{position:absolute;left:50%;bottom:0;translate:-50% 0;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;padding:10px 18px 10px 10px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.pill-float i{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg)}
+.pill-float svg{width:16px;height:16px}
+
+/* marquee */
+.mq{background:var(--ink);color:var(--bg);border-radius:20px;overflow:hidden;padding-block:16px}
+.mq-track{display:flex;width:max-content;animation:mq 32s linear infinite}
+.mq span{font-weight:700;font-size:clamp(16px,2.2vw,24px);letter-spacing:-.02em;text-transform:uppercase;padding-inline:18px;display:flex;align-items:center;gap:36px;white-space:nowrap}
+.mq span::after{content:"";width:9px;height:9px;background:var(--bg);transform:rotate(45deg);opacity:.5}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* sections */
+.sec-h{display:flex;justify-content:space-between;align-items:end;gap:16px;padding-block:72px 24px}
+.sec-h h2,.how h2,.faq h2{margin:0;font-weight:700;font-size:clamp(30px,4.6vw,56px);letter-spacing:-.05em;line-height:1}
+.sec-h p{margin:0;color:var(--muted);max-width:30ch;font-size:14px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,minmax(210px,26vw));gap:12px;max-height:none}
+.tile{position:relative;border-radius:26px;overflow:hidden;border:0;padding:0;text-align:left;background:var(--soft);min-width:0;color:#fff}
+.tile:nth-child(1){grid-column:1/3;grid-row:1/3}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.tile:hover img{transform:scale(1.05)}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,8,.72),rgba(10,8,8,0) 55%)}
+.tile div{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;display:flex;justify-content:space-between;align-items:end;gap:10px}
+.tile b{font-weight:700;font-size:clamp(17px,2.3vw,28px);letter-spacing:-.03em;line-height:1.05}
+.tile small{display:block;font-size:12.5px;opacity:.8;margin-top:4px;font-weight:500}
+.tile i{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:#100e0e;font-style:normal;font-size:17px}
+
+/* filter bar */
+.bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20;margin-top:8px;background:color-mix(in srgb,var(--surface) 84%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:24px;padding:10px;display:grid;gap:10px}
+.r1{display:flex;gap:8px;min-width:0}
+.search{flex:1;min-width:0;position:relative}
+.search input{width:100%;height:44px;border:0;background:var(--soft);color:var(--ink);border-radius:999px;padding:0 18px 0 44px;font:inherit}
+.search input::placeholder{color:var(--muted)}
+.search svg{position:absolute;left:16px;top:50%;translate:0 -50%;width:18px;height:18px;color:var(--muted)}
+.ib{flex:none;height:44px;min-width:44px;border-radius:999px;border:0;background:var(--soft);display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;font-weight:600;font-size:14px;text-decoration:none}
+.ib svg{width:18px;height:18px}
+.ib[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.r2{display:flex;justify-content:space-between;gap:14px;align-items:center;min-width:0}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.chips::-webkit-scrollbar,.dots::-webkit-scrollbar{display:none}
+.chip{flex:none;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;font-size:14px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dots{display:flex;gap:8px;align-items:center;flex:none;overflow-x:auto;scrollbar-width:none}
+.dot{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line);padding:0}
+.dot[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+
+/* grid */
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-block:28px 18px}
+.meta h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.04em}
+.meta span{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 14px}
+.card{min-width:0;display:flex;flex-direction:column;gap:12px;cursor:pointer;border-radius:22px}
+.ph{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:var(--soft)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ph img{transform:scale(1.05)}
+.heart{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:grid;place-items:center;color:var(--ink)}
+.heart svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9}
+.heart[aria-pressed="true"]{color:#d6264f}
+.heart[aria-pressed="true"] svg{fill:currentColor}
+.go{position:absolute;z-index:2;left:10px;right:10px;bottom:10px;height:44px;border-radius:999px;background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;text-decoration:none;opacity:0;translate:0 10px;transition:.3s}
+.card:hover .go,.go:focus-visible{opacity:1;translate:0 0}
+.card h4{margin:0;font-size:15px;font-weight:600;line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+.sub{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+.sw{width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 1px var(--line);flex:none}
+.empty{grid-column:1/-1;text-align:center;padding:64px 16px;color:var(--muted)}
+.empty .btn{margin-top:16px}
+
+/* how */
+.how{padding-block:88px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;min-width:0;display:flex;flex-direction:column;gap:10px;min-height:250px}
+.steps li::before{content:counter(s);font-weight:800;font-size:84px;line-height:1;letter-spacing:-.06em;color:var(--soft);margin-bottom:auto}
+.steps b{font-size:20px;letter-spacing:-.03em}
+.steps p{margin:0;color:var(--muted)}
+.faq{padding-block:88px 0;display:grid;grid-template-columns:1fr 1.3fr;gap:40px}
+details{border-top:1px solid var(--line);padding-block:20px}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:600;font-size:17px;letter-spacing:-.02em;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--accent);font-weight:400}
+details[open] summary::after{content:"–"}
+details p{margin:12px 0 0;color:var(--muted);max-width:56ch}
+
+/* footer */
+.foot{margin-top:96px;background:var(--ink);color:var(--bg);border-radius:32px;padding:clamp(28px,5vw,64px);display:grid;gap:28px;overflow:hidden}
+.foot h2{margin:0;font-weight:500;font-size:clamp(18px,2.4vw,26px);letter-spacing:-.03em;opacity:.7}
+.mega{font-weight:800;font-size:clamp(40px,12vw,168px);line-height:.95;letter-spacing:-.065em;text-decoration:none;display:block;overflow-wrap:anywhere}
+.mega:hover{opacity:.8}
+.foot .btn{background:var(--bg);color:var(--ink);justify-self:start}
+.copy{padding-block:24px 0;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* quick view */
+.ov{position:fixed;inset:0;z-index:60;background:rgba(10,8,8,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px}
+.sheet{background:var(--bg);color:var(--ink);width:100%;max-width:900px;max-height:100%;overflow:auto;border-radius:30px;display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative}
+.sheet .ph{border-radius:30px;aspect-ratio:auto;min-height:100%;height:100%;margin:8px 0 8px 8px}
+.sheet .ph img{position:absolute}
+.sb{padding:36px 32px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.sb .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sb h3{margin:6px 0 0;font-weight:700;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.045em;line-height:1.04}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0;font-size:14.5px;border-block:1px solid var(--line);padding-block:16px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;display:flex;align-items:center;gap:8px;font-weight:500}
+.note{font-size:13.5px;color:var(--muted);margin:0}
+.sb .btn{width:100%}
+.nv{display:flex;gap:8px;margin-top:auto}
+.nv button{flex:1;height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;font-weight:500;font-size:14px}
+.nv button:hover{background:var(--surface)}
+.x{position:absolute;top:18px;right:18px;z-index:5;width:42px;height:42px;border-radius:50%;border:0;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:22px;line-height:1}
+
+.fab{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;display:none}
+.fab .btn{width:100%;box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.toast{position:fixed;left:50%;translate:-50% 0;bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:13px 20px;border-radius:999px;font-size:14px;font-weight:500;z-index:80;max-width:calc(100% - 32px);text-align:center}
+
+@media (max-width:1000px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .hero{grid-template-columns:1fr;gap:28px}
+  .col3{max-width:560px}
+  .faq{grid-template-columns:1fr;gap:24px}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  .grid{grid-template-columns:repeat(2,1fr);gap:22px 10px}
+  .steps{grid-template-columns:1fr}
+  .steps li{min-height:0;gap:8px}
+  .steps li::before{font-size:56px;margin-bottom:6px}
+  .bento{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:minmax(200px,52vw)}
+  .tile:nth-child(1){grid-column:1/3;grid-row:auto;min-height:340px}
+  .sec-h{flex-direction:column;align-items:start;padding-block:56px 20px}
+  .r2{flex-direction:column;align-items:stretch}
+  .dots{padding-bottom:2px}
+  .sheet{grid-template-columns:1fr;border-radius:26px}
+  .sheet .ph{margin:8px 8px 0;aspect-ratio:4/4.6;min-height:0;height:auto}
+  .sb{padding:22px 20px 22px}
+  .go{opacity:1;translate:0 0;left:auto;width:42px;height:42px;padding:0;right:10px;bottom:10px}
+  .go span{display:none}
+  .fab{display:block}
+  .head .btn{display:none}
+  .cta .btn-line{display:none}
+  .facts{gap:10px 22px}
+  .facts b{font-size:19px}
+  .foot{margin-top:64px;border-radius:26px}
+  body{padding-bottom:84px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .mq-track{animation:none}
+  *{transition:none!important}
+}
+</style>
+
+<div class="wrap" id="top">
+  <header class="head">
+    <a class="logo" href="#top">shoping<i>_37</i></a>
+    <nav class="nav"><a href="#catalog">Каталог</a><a href="#how">Как заказать</a><a href="#faq">Вопросы</a></nav>
+    <a class="btn btn-ink" href="https://www.instagram.com/shoping_37/" target="_blank" rel="noopener">Instagram</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="tag">Зима 2026 · новинки в наличии</span>
+      <h1>Будь в <span class="serif">тренде</span> этой зимой</h1>
+      <p>Пуховики, костюмы, трикотаж и платья. Выберите модель и закажите в Директе Instagram за минуту.</p>
+      <div class="cta">
+        <a class="btn btn-ink" href="#catalog">Смотреть каталог
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+        <a class="btn btn-line" href="https://ig.me/m/shoping_37" target="_blank" rel="noopener">Написать в Instagram</a>
+      </div>
+      <ul class="facts">
+        <li><b>24/7</b><span>приём заказов</span></li>
+        <li><b>вся РФ</b><span>отправка любой ТК</span></li>
+        <li><b>~1 мин</b><span>оформить в Директе</span></li>
+      </ul>
+    </div>
+    <div class="col3">
+      <figure><img src="img/s3r0c1.jpg" alt="Костюм с пуговицами"></figure>
+      <figure><img src="img/s1r3c0.jpg" alt="Шуба с капюшоном"></figure>
+      <figure><img src="img/s2r2c2.jpg" alt="Белый пуховик с капюшоном"></figure>
+      <a class="pill-float" href="https://ig.me/m/shoping_37" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></i>Заказ через Instagram</a>
+    </div>
+  </section>
+
+  <div class="mq" aria-hidden="true"><div class="mq-track" id="mq"></div></div>
+
+  <div class="sec-h"><h2>Коллекции</h2><p>Выберите раздел, остальное подберём в каталоге ниже.</p></div>
+  <section class="bento" id="bento"></section>
+
+  <div class="sec-h" id="catalog"><h2>Каталог</h2><p>Нажмите на фото, чтобы посмотреть модель и заказать.</p></div>
+  <div class="bar">
+    <div class="r1">
+      <label class="search"><span hidden>Поиск по каталогу</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Пуховик, костюм, бордо…" autocomplete="off">
+      </label>
+      <button class="ib" id="favT" type="button" aria-pressed="false" aria-label="Избранное">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span id="favN">0</span>
+      </button>
+      <a class="ib" href="https://ig.me/m/shoping_37" target="_blank" rel="noopener" aria-label="Написать в Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg>
+      </a>
+    </div>
+    <div class="r2"><div class="chips" id="cats"></div><div class="dots" id="cols"></div></div>
+  </div>
+  <div class="meta"><h3 id="ttl">Все модели</h3><span id="cnt"></span></div>
+  <main class="grid" id="grid"></main>
+
+  <section class="how" id="how">
+    <h2>Как заказать</h2>
+    <ol class="steps">
+      <li><b>Выберите модель</b><p>Откройте карточку: цвет, артикул и фото в одном месте.</p></li>
+      <li><b>Нажмите «Заказать»</b><p>Откроется наш Директ в Instagram, а текст с названием и артикулом уже скопирован.</p></li>
+      <li><b>Вставьте и отправьте</b><p>Допишите размер и город. Мы подтвердим наличие и цену и отправим заказ транспортной компанией.</p></li>
+    </ol>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2>Вопросы</h2>
+    <div>
+      <details><summary>Как узнать цену и наличие?</summary><p>Цены и остатки меняются, поэтому мы называем их в Директе. Нажмите «Заказать» и мы ответим в Instagram.</p></details>
+      <details><summary>Как вы отправляете заказы?</summary><p>Отправляем любой транспортной компанией по России. Выберите удобную при оформлении.</p></details>
+      <details><summary>Когда можно писать?</summary><p>Заказы принимаются круглосуточно. Отвечаем по порядку.</p></details>
+      <details><summary>Не знаю свой размер</summary><p>Напишите рост, вес и обычный размер. Подскажем, какой взять в конкретной модели.</p></details>
+    </div>
+  </section>
+
+  <section class="foot">
+    <h2>Больше новинок и живых фото</h2>
+    <a class="mega" href="https://www.instagram.com/shoping_37/" target="_blank" rel="noopener">@shoping_37</a>
+    <a class="btn" href="https://ig.me/m/shoping_37" target="_blank" rel="noopener">Написать в Директ</a>
+  </section>
+  <div class="copy"><span>© shoping_37</span><span>Интернет-магазин одежды</span></div>
+</div>
+
+<div class="fab"><a class="btn btn-ink" href="https://ig.me/m/shoping_37" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg>
+  Написать в Instagram</a></div>
+<div class="ov" id="ov" hidden role="dialog" aria-modal="true" aria-label="Карточка товара"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===== ДАННЫЕ КАТАЛОГА =====
+   Новая модель: добавьте строку в ITEMS. img: файл в папке img/ или любая ссылка.
+   Размеры и цены не показываем: их называют в Директе. */
+var IG_DM='https://ig.me/m/shoping_37';
+var CATS=['Верхняя одежда','Костюмы','Кофты и кардиганы','Платья','Обувь'];
+var CATIMG=['s5r2c2','s5r3c0','s1r1c1','s3r0c0','s3r1c2'];
+var CG={brown:['Шоколад','#5a3a2e'],cream:['Молочные и бежевые','#e6dccd'],wine:['Бордо','#6a2438'],dark:['Чёрные и серые','#26242a'],soft:['Голубые и розовые','#b9cde4'],bright:['Яркие','#c8322b']};
+var ITEMS=[
+ {id:'O-01',img:'s2r2c1',n:'Короткий пуховик с воротником',cat:0,col:'Розовый',hex:'#e6b7c5',g:'soft'},
+ {id:'O-02',img:'s2r2c2',n:'Пуховик с капюшоном и мехом',cat:0,col:'Молочный',hex:'#efe9e2',g:'cream'},
+ {id:'O-03',img:'s3r1c1',n:'Пуховик с меховым воротником',cat:0,col:'Серый',hex:'#b9b4b0',g:'dark'},
+ {id:'O-04',img:'s3r3c1',n:'Укороченный пуховик',cat:0,col:'Мокко',hex:'#6c5750',g:'brown'},
+ {id:'O-05',img:'s4r3c1',n:'Пуховик с принтом',cat:0,col:'Шоколад',hex:'#6b5648',g:'brown'},
+ {id:'O-06',img:'s5r0c0',n:'Куртка с меховым воротником',cat:0,col:'Графит',hex:'#4a4a45',g:'dark'},
+ {id:'O-07',img:'s5r2c0',n:'Куртка с меховым воротником',cat:0,col:'Чёрный',hex:'#1f1d20',g:'dark'},
+ {id:'O-08',img:'s4r1c0',n:'Куртка с контрастным воротником',cat:0,col:'Бежевый',hex:'#cbb79d',g:'cream'},
+ {id:'O-09',img:'s1r2c2',n:'Джинсовая куртка с мехом',cat:0,col:'Синий',hex:'#4a6a94',g:'soft'},
+ {id:'O-10',img:'s5r2c2',n:'Кожаная куртка с капюшоном',cat:0,col:'Коричневый',hex:'#5a3c30',g:'brown'},
+ {id:'O-11',img:'s5r3c1',n:'Яркий пуховик',cat:0,col:'Красный',hex:'#c8322b',g:'bright'},
+ {id:'O-12',img:'s1r3c0',n:'Шуба с капюшоном',cat:0,col:'Шоколад',hex:'#4a3028',g:'brown'},
+ {id:'O-13',img:'s2r3c2',n:'Шубка с капюшоном и принтом',cat:0,col:'Карамель',hex:'#b78b5d',g:'brown'},
+ {id:'O-14',img:'s3r0c2',n:'Пальто с мехом и поясом',cat:0,col:'Чёрный',hex:'#151316',g:'dark'},
+ {id:'S-01',img:'s2r1c2',n:'Костюм с запахом',cat:1,col:'Бежевый',hex:'#b9a38a',g:'cream'},
+ {id:'S-02',img:'s2r2c0',n:'Вязаный комплект: свитер и юбка',cat:1,col:'Молочный',hex:'#ece3d2',g:'cream'},
+ {id:'S-03',img:'s2r1c0',n:'Велюровый костюм с капюшоном',cat:1,col:'Тёмно-синий',hex:'#1d2655',g:'dark'},
+ {id:'S-04',img:'s3r0c1',n:'Костюм с пуговицами',cat:1,col:'Сливовый',hex:'#6e1e4a',g:'wine'},
+ {id:'S-05',img:'s3r2c1',n:'Комплект: топ и кардиган',cat:1,col:'Розовый',hex:'#e9a3c0',g:'soft'},
+ {id:'S-06',img:'s4r2c2',n:'Комплект: свитер и юбка с блеском',cat:1,col:'Бордо',hex:'#6a2438',g:'wine'},
+ {id:'S-07',img:'s5r1c2',n:'Спортивный костюм с лампасами',cat:1,col:'Чёрный',hex:'#1a1a1d',g:'dark'},
+ {id:'S-08',img:'s5r2c1',n:'Костюм на молнии',cat:1,col:'Графит и беж',hex:'#b3a89b',g:'cream'},
+ {id:'S-09',img:'s5r3c0',n:'Комплект с шортами',cat:1,col:'Шоколад',hex:'#4b3329',g:'brown'},
+ {id:'S-10',img:'s1r2c0',n:'Трикотажный костюм',cat:1,col:'Шоколад',hex:'#4a2f27',g:'brown'},
+ {id:'S-11',img:'s4r1c1',n:'Костюм с блёстками',cat:1,col:'Молочный',hex:'#e7e2db',g:'cream'},
+ {id:'K-01',img:'s1r0c2',n:'Свитер с кружевом',cat:2,col:'Бежевый',hex:'#e3cfa9',g:'cream'},
+ {id:'K-02',img:'s1r1c1',n:'Кофта на молнии',cat:2,col:'Голубой',hex:'#a9c4e0',g:'soft'},
+ {id:'K-03',img:'s1r2c1',n:'Свитшот с перьями на манжетах',cat:2,col:'Шоколад',hex:'#4d3029',g:'brown'},
+ {id:'K-04',img:'s1r3c2',n:'Кардиган с кружевом',cat:2,col:'Серо-розовый',hex:'#b5a1a3',g:'soft'},
+ {id:'K-05',img:'s2r1c1',n:'Свитшот с кружевом',cat:2,col:'Шоколад',hex:'#5a3a2e',g:'brown'},
+ {id:'K-06',img:'s2r3c0',n:'Вязаный топ с кардиганом',cat:2,col:'Молочный',hex:'#efe9dd',g:'cream'},
+ {id:'K-07',img:'s2r3c1',n:'Свитер с кружевными манжетами',cat:2,col:'Серый',hex:'#9a9494',g:'dark'},
+ {id:'K-08',img:'s3r2c2',n:'Кардиган с пуговицами',cat:2,col:'Молочный',hex:'#f1ece4',g:'cream'},
+ {id:'K-09',img:'s4r3c2',n:'Топ и кардиган с перьями',cat:2,col:'Серый',hex:'#aaa6a6',g:'dark'},
+ {id:'K-10',img:'s5r0c2',n:'Топ с блёстками',cat:2,col:'Мокко',hex:'#6e5b4f',g:'brown'},
+ {id:'K-11',img:'s3r1c0',n:'Разноцветный кардиган',cat:2,col:'Мультиколор',hex:'#6fb0c9',g:'bright'},
+ {id:'D-01',img:'s3r0c0',n:'Макси-платье с кружевом',cat:3,col:'Шоколад',hex:'#4f3329',g:'brown'},
+ {id:'D-02',img:'s1r0c1',n:'Платье с воротником-стойкой',cat:3,col:'Чёрный',hex:'#17151a',g:'dark'},
+ {id:'B-01',img:'s3r1c2',n:'Замшевые ботинки',cat:4,col:'Песочный',hex:'#c9aa84',g:'cream'}
+];
+var $=function(i){return document.getElementById(i)};
+var st={cat:-1,g:'',q:'',fav:false},favs=[],cur=null;
+try{favs=JSON.parse(localStorage.getItem('s37fav')||'[]')}catch(e){}
+function saveFav(){try{localStorage.setItem('s37fav',JSON.stringify(favs))}catch(e){}}
+function src(x){return /^(https?:|data:|img\/)/.test(x)?x:'img/'+x+'.jpg'}
+function byId(id){return ITEMS.filter(function(x){return x.id===id})[0]}
+function plural(n){var a=n%10,b=n%100;return n+' '+(a===1&&b!==11?'модель':(a>1&&a<5&&(b<10||b>20)?'модели':'моделей'))}
+var HEART='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+var ARROW='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+
+function toast(m){var t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(function(){t.hidden=true},3400)}
+function orderText(it){return 'Здравствуйте! Хочу заказать: '+it.n+' ('+it.col.toLowerCase()+', арт. '+it.id+'). Размер: '}
+function copyOrder(it){
+  var ok=function(){toast('Текст заказа скопирован. Вставьте его в Директ.')},bad=function(){toast('Напишите нам в Директ: '+it.n+', арт. '+it.id)};
+  try{navigator.clipboard.writeText(orderText(it)).then(ok,bad)}catch(e){bad()}
+}
+function visible(){
+  var q=st.q.trim().toLowerCase();
+  return ITEMS.filter(function(it){
+    if(st.cat>-1&&it.cat!==st.cat)return false;
+    if(st.g&&it.g!==st.g)return false;
+    if(st.fav&&favs.indexOf(it.id)<0)return false;
+    if(q&&(it.n+' '+it.col+' '+CATS[it.cat]+' '+it.id).toLowerCase().indexOf(q)<0)return false;
+    return true;
+  });
+}
+function render(){
+  var list=visible(),g=$('grid');
+  $('ttl').textContent=st.fav?'Избранное':(st.cat>-1?CATS[st.cat]:'Все модели');
+  $('cnt').textContent=plural(list.length);
+  $('favN').textContent=favs.length;
+  if(!list.length){g.innerHTML='<div class="empty">'+(st.fav?'В избранном пока пусто. Нажмите на сердце у понравившейся модели.':'Ничего не найдено. Попробуйте другой цвет или запрос.')+'<br><button class="btn btn-line" type="button" id="reset">Сбросить фильтры</button></div>';$('reset').onclick=reset;return}
+  g.innerHTML=list.map(function(it){
+    var on=favs.indexOf(it.id)>-1;
+    return '<article class="card" data-open="'+it.id+'" tabindex="0" role="button" aria-label="'+it.n+'"><div class="ph"><img src="'+src(it.img)+'" alt="'+it.n+'" loading="lazy">'+
+      '<button class="heart" type="button" data-fav="'+it.id+'" aria-pressed="'+on+'" aria-label="В избранное">'+HEART+'</button>'+
+      '<a class="go" data-order="'+it.id+'" href="'+IG_DM+'" target="_blank" rel="noopener"><span>Заказать</span>'+ARROW+'</a></div>'+
+      '<div><h4>'+it.n+'</h4><div class="sub"><i class="sw" style="background:'+it.hex+'"></i>'+it.col+'</div></div></article>';
+  }).join('');
+}
+function reset(){st={cat:-1,g:'',q:'',fav:false};$('q').value='';$('favT').setAttribute('aria-pressed','false');drawChips();render()}
+function drawChips(){
+  var h='<button class="chip" type="button" data-cat="-1" aria-pressed="'+(st.cat===-1)+'">Все</button>';
+  CATS.forEach(function(c,i){h+='<button class="chip" type="button" data-cat="'+i+'" aria-pressed="'+(st.cat===i)+'">'+c+'</button>'});
+  $('cats').innerHTML=h;
+  var d='';
+  Object.keys(CG).forEach(function(k){d+='<button class="dot" type="button" data-g="'+k+'" style="background:'+CG[k][1]+'" title="'+CG[k][0]+'" aria-label="'+CG[k][0]+'" aria-pressed="'+(st.g===k)+'"></button>'});
+  $('cols').innerHTML=d;
+}
+function drawBento(){
+  $('bento').innerHTML=CATS.map(function(c,i){
+    var n=ITEMS.filter(function(x){return x.cat===i}).length;
+    return '<button class="tile" type="button" data-tile="'+i+'"><img src="'+src(CATIMG[i])+'" alt="" loading="lazy"><div><span><b>'+c+'</b><small>'+plural(n)+'</small></span><i>↗</i></div></button>';
+  }).join('');
+}
+function drawMq(){
+  var w=CATS.map(function(c){return '<span>'+c+'</span>'}).join('')+'<span>Приём заказов 24/7</span><span>Отправка по РФ</span>';
+  $('mq').innerHTML=w+w+w+w;
+}
+function openCard(id){
+  var it=byId(id);if(!it)return;cur=id;
+  var on=favs.indexOf(id)>-1;
+  $('sheet').innerHTML='<button class="x" type="button" id="close" aria-label="Закрыть">×</button>'+
+   '<div class="ph"><img src="'+src(it.img)+'" alt="'+it.n+'"></div>'+
+   '<div class="sb"><div><div class="eyebrow">'+CATS[it.cat]+'</div><h3>'+it.n+'</h3></div>'+
+   '<dl class="kv"><dt>Цвет</dt><dd><i class="sw" style="background:'+it.hex+'"></i>'+it.col+'</dd><dt>Артикул</dt><dd>'+it.id+'</dd><dt>Размеры</dt><dd>Уточняйте в Директе</dd><dt>Цена</dt><dd>Назовём в Директе</dd></dl>'+
+   '<a class="btn btn-ink" id="ord" href="'+IG_DM+'" target="_blank" rel="noopener">Заказать в Instagram '+ARROW+'</a>'+
+   '<p class="note">Текст с названием и артикулом скопируется сам. Останется вставить его в Директ и написать размер.</p>'+
+   '<button class="btn btn-line" type="button" data-fav="'+id+'" id="sfav" aria-pressed="'+on+'">'+(on?'В избранном':'В избранное')+'</button>'+
+   '<div class="nv"><button type="button" data-nav="-1">← Назад</button><button type="button" data-nav="1">Дальше →</button></div></div>';
+  $('ov').hidden=false;document.body.style.overflow='hidden';
+  $('sheet').scrollTop=0;$('close').focus();
+}
+function closeCard(){$('ov').hidden=true;document.body.style.overflow='';cur=null}
+function nav(d){
+  var l=visible(),i=-1;for(var k=0;k<l.length;k++)if(l[k].id===cur)i=k;
+  if(i<0||!l.length)return;openCard(l[(i+d+l.length)%l.length].id);
+}
+document.addEventListener('click',function(e){
+  var t=e.target,x;
+  if((x=t.closest('[data-order]'))){copyOrder(byId(x.getAttribute('data-order')));return}
+  if(t.closest('#ord')){copyOrder(byId(cur));return}
+  if((x=t.closest('[data-fav]'))){var id=x.getAttribute('data-fav'),i=favs.indexOf(id);if(i>-1)favs.splice(i,1);else favs.push(id);saveFav();
+    if(!$('ov').hidden){var s=$('sfav'),on=favs.indexOf(id)>-1;if(s){s.setAttribute('aria-pressed',on);s.textContent=on?'В избранном':'В избранное'}}
+    render();return}
+  if((x=t.closest('[data-nav]'))){nav(+x.getAttribute('data-nav'));return}
+  if((x=t.closest('[data-tile]'))){st.cat=+x.getAttribute('data-tile');st.fav=false;st.g='';$('favT').setAttribute('aria-pressed','false');drawChips();render();$('catalog').scrollIntoView({behavior:'smooth'});return}
+  if((x=t.closest('[data-cat]'))){st.cat=+x.getAttribute('data-cat');st.fav=false;$('favT').setAttribute('aria-pressed','false');drawChips();render();return}
+  if((x=t.closest('[data-g]'))){var k=x.getAttribute('data-g');st.g=st.g===k?'':k;drawChips();render();return}
+  if((x=t.closest('[data-open]'))){openCard(x.getAttribute('data-open'));return}
+  if(t===$('ov')||t.closest('#close'))closeCard();
+});
+document.addEventListener('keydown',function(e){
+  if(!$('ov').hidden){
+    if(e.key==='Escape')closeCard();
+    if(e.key==='ArrowRight')nav(1);
+    if(e.key==='ArrowLeft')nav(-1);
+    return;
+  }
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.card')){e.preventDefault();openCard(e.target.getAttribute('data-open'))}
+});
+$('q').addEventListener('input',function(e){st.q=e.target.value;render()});
+$('favT').addEventListener('click',function(){st.fav=!st.fav;this.setAttribute('aria-pressed',st.fav);render()});
+drawMq();drawBento();drawChips();render();
+</script>
+
+</html>
