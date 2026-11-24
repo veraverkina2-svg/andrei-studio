@@ -63,9 +63,9 @@
     .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .brand img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
     .brand strong { display: block; font: 800 1.15rem var(--head); letter-spacing: -.02em; line-height: 1.1; }
-    .brand small { display: block; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-    .nav-links { display: none; gap: 22px; }
-    .nav-links a { text-decoration: none; font-weight: 500; font-size: .93rem; color: var(--ink); opacity: .85; }
+    .brand small { white-space: nowrap; display: block; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    .nav-links { display: none; gap: 14px; }
+    .nav-links a { white-space: nowrap; text-decoration: none; font-weight: 500; font-size: .86rem; color: var(--ink); opacity: .85; }
     .nav-links a:hover { opacity: 1; color: var(--gold-ink); }
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .lang { display: inline-flex; background: var(--soft); border-radius: 999px; padding: 3px; }
@@ -266,6 +266,7 @@
     .field textarea { width: 100%; min-height: 120px; padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 12px; font: 500 1rem var(--body); resize: vertical; } .field textarea:focus { outline: none; border-color: var(--ink); }
     .option[disabled] { opacity: .55; cursor: not-allowed; border-style: dashed; } .option[disabled]:hover { transform: none; border-color: var(--line); }
     .rev-more { margin-top: 18px; }
+    @media (min-width: 1440px) { .nav-links { display: flex; } .menu-toggle { display: none; } }
     @media (min-width: 960px) { .join { grid-template-columns: 1.1fr 1fr; padding: 48px; gap: 40px; align-items: start; } }
     /* floating */
     .wa-float { position: fixed; right: 16px; bottom: 16px; z-index: 40; background: #25d366; color: #fff; border-radius: 99px; padding: 13px 18px; font-weight: 700; text-decoration: none; display: flex; gap: 8px; align-items: center; box-shadow: 0 10px 28px rgba(37,211,102,.45); font-size: .92rem; }
@@ -305,7 +306,7 @@
       .wa-float .t { display: inline; } .steps { grid-template-columns: repeat(3, 1fr); }
     }
     @media (min-width: 960px) {
-      .nav-links { display: flex; } .menu-toggle { display: none; } .nav-cta { display: inline-flex; }
+      .nav-cta { display: inline-flex; }
       .hero-grid { grid-template-columns: 1.1fr .9fr; gap: 56px; } .hero { padding: 64px 0 80px; }
       .grid-4 { grid-template-columns: repeat(4, 1fr); } .fmt-grid { grid-template-columns: repeat(3, 1fr); }
       .price-grid { grid-template-columns: repeat(4, 1fr); } .calc { grid-template-columns: 1.3fr 1fr; padding: 36px; }
@@ -317,11 +318,11 @@
     }
     @media (max-width: 520px) { .brand small { display: none; } .nav-right .lang-btn { padding: 6px 9px; } .btn { padding: 13px 20px; } .chip.c2 { right: -2%; } }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .js .reveal { opacity: 1; transform: none; } }
-  </style>
+  .site-header .nav.container{width:min(1400px,100% - 32px)}.calc>*{min-width:0}.nav-join{color:var(--gold)!important;font-weight:700}.promo-sep{opacity:.5;margin:0 6px}@media(max-width:700px){.promo-sep{display:none}}.promo a.link{color:inherit;text-decoration:underline;font-weight:600}</style>
 </head>
 <body>
   <div class="promo" id="promo">
-    <div class="container"><span data-i18n="promoText">🎁 Free 10-minute intro with Frank + Free English Club for every student</span> <button class="link" type="button" data-open-wizard="gift" data-i18n="promoLink">Claim it →</button></div>
+    <div class="container"><span data-i18n="promoText">🎁 Free 10-minute intro with Frank + Free English Club for every student</span> <button class="link" type="button" data-open-wizard="gift" data-i18n="promoLink">Claim it →</button> <span class="promo-sep">·</span> <a class="link" href="#join" data-i18n="promoJoin">We are hiring teachers →</a></div>
     <button class="x" type="button" id="promoClose" aria-label="Close">×</button>
   </div>
 
@@ -336,6 +337,7 @@
         <a href="#lessons" data-i18n="navLessons">Lessons</a>
         <a href="#reviews" data-i18n="navReviews">Reviews</a>
         <a href="#faq" data-i18n="navFaq">FAQ</a>
+        <a href="#join" class="nav-join" data-i18n="navTeach">Teach with us</a>
       </nav>
       <div class="nav-right">
         <div class="lang" role="group" aria-label="Language"><button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="de" type="button">DE</button><button class="lang-btn active" data-lang="en" type="button">EN</button></div>
@@ -344,7 +346,7 @@
       </div>
     </div>
     <div class="drawer" id="mobileDrawer">
-      <a href="#how" data-i18n="navHow">How It Works</a><a href="#quiz" data-i18n="navQuiz">Level quiz</a><a href="#pricing" data-i18n="navPricing">Pricing</a><a href="#about" data-i18n="navAbout">About Frank</a><a href="#lessons" data-i18n="navLessons">Lessons</a><a href="#reviews" data-i18n="navReviews">Reviews</a><a href="#faq" data-i18n="navFaq">FAQ</a>
+      <a href="#how" data-i18n="navHow">How It Works</a><a href="#quiz" data-i18n="navQuiz">Level quiz</a><a href="#pricing" data-i18n="navPricing">Pricing</a><a href="#about" data-i18n="navAbout">About Frank</a><a href="#lessons" data-i18n="navLessons">Lessons</a><a href="#reviews" data-i18n="navReviews">Reviews</a><a href="#faq" data-i18n="navFaq">FAQ</a><a href="#join" data-i18n="navTeach">Teach with us</a>
     </div>
   </header>
 
@@ -935,6 +937,8 @@ const NEW = {
     rvSendWa: 'Send via WhatsApp', rvSendMail: 'Send by email', rvSubject: 'New review for Lingofrava',
     promoText: '🎁 Free 10-minute intro with Frank + Free English Club for every student',
     promoLink: 'Claim it →',
+    navTeach: 'Teach with us',
+    promoJoin: '👩‍🏫 We are hiring teachers →',
     navQuiz: 'Level quiz', navLessons: 'Lessons',
     heroQuizCta: 'Take the 2-minute level quiz',
     heroChip1: 'Live on Zoom', heroChip3: 'Free English Club',
@@ -1028,6 +1032,8 @@ const NEW = {
     rvSendWa: 'Отправить в WhatsApp', rvSendMail: 'Отправить по email', rvSubject: 'Новый отзыв о Lingofrava',
     promoText: '🎁 Бесплатное знакомство 10 минут с Фрэнком + Free English Club для каждого студента',
     promoLink: 'Забрать →',
+    navTeach: 'Преподавателям',
+    promoJoin: '👩‍🏫 Ищем преподавателей →',
     navQuiz: 'Тест уровня', navLessons: 'Занятия',
     heroQuizCta: 'Пройти тест уровня за 2 минуты',
     heroChip1: 'Живо в Zoom', heroChip3: 'Free English Club',
@@ -1121,6 +1127,8 @@ const NEW = {
     rvSendWa: 'Per WhatsApp senden', rvSendMail: 'Per E-Mail senden', rvSubject: 'Neue Bewertung für Lingofrava',
     promoText: '🎁 Gratis 10-Minuten-Kennenlernen mit Frank + Free English Club für alle Lernenden',
     promoLink: 'Jetzt sichern →',
+    navTeach: 'Für Lehrkräfte',
+    promoJoin: '👩‍🏫 Wir suchen Lehrkräfte →',
     navQuiz: 'Niveau-Quiz', navLessons: 'Unterricht',
     heroQuizCta: 'Niveau-Quiz in 2 Minuten starten',
     heroChip1: 'Live per Zoom', heroChip3: 'Free English Club',
